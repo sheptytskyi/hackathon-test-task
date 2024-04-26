@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class UserTypeChoices(models.TextChoices):
-    needs = 'Потребує допомоги'
-    helper = 'Надає допомогу'
+    needs = 'needs', 'Потребує допомоги'
+    helper = 'helper', 'Надає допомогу'
 
 
 class CustomUserManager(BaseUserManager):
