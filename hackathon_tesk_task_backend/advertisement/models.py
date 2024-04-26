@@ -26,6 +26,8 @@ class Category(models.Model):
 
     class Meta:
         ordering = ["name"]
+        verbose_name = 'Категорія'
+        verbose_name_plural = 'Категорії'
 
     def __str__(self) -> str:
         return str(self.name)
@@ -35,7 +37,7 @@ class Advertisement(models.Model):
     id = models.AutoField(primary_key=True)
     author = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE)
     title = models.CharField(verbose_name="Заголовок", max_length=99)
-    description = models.CharField(verbose_name="Опис")
+    description = models.TextField(verbose_name="Опис")
     categories = models.ManyToManyField(Category)
     location = models.CharField(verbose_name="Місцезнаходження", max_length=99)
     picture = models.ImageField(upload_to=f'advertisement_pictures/{datetime.today()}/{id}', null=True)
@@ -49,4 +51,4 @@ class Advertisement(models.Model):
         verbose_name_plural = 'Оголошення'
 
     def __str__(self) -> str:
-        return str(self.id)
+        return str(self.id) + str(self.title)
