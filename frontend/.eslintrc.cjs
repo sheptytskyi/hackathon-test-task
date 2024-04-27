@@ -20,9 +20,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': 'error',
     "unused-imports/no-unused-imports": "error",
-
   },
-
   settings: {
     'import/resolver': {
       alias: {
@@ -33,8 +31,10 @@ module.exports = {
           ['@constants', './src/constants'],
           ['@ui', './src/ui'],
           ['@theme', './src/theme'],
+          ['@app', './src/app'],
+          ['@hooks', './src/hooks'],
         ],
-        extensions: ['.ts', '.js', '.jsx', '.json']
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
       }
     }
   }

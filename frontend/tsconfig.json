@@ -19,11 +19,15 @@
       "@/*": ["*"],
       "@modules/*": ["modules/*"],
       "@constants/*": ["constants/*"],
-      "@router/*": ["src/router/*"],
+      "@constants": ["constants"],
+      "@router/*": ["router/*"],
       "@router": ["router"],
-      "@ui/*": ["*"],
+      "@ui/*": ["ui/*"],
       "@theme/*": ["theme/*"],
-      "@theme": ["theme"]
+      "@theme": ["theme"],
+      "@app/*": ["app/*"],
+      "@app": ["app"],
+      "@hooks/*": ["hooks/*"]
     },
 
     /* Linting */

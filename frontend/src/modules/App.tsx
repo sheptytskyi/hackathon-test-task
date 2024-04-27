@@ -1,18 +1,21 @@
 import { RouterProvider } from 'react-router-dom';
 import { RouterSettings } from '@router';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import muiTheme from '@theme';
+import { Loader } from '@/ui';
+import useProfile from '@hooks/useProfile.ts';
 
 const App = () => {
-  return (
-    <ThemeProvider theme={muiTheme}>
-      <CssBaseline />
+  // TODO remove after CORS fix
+  useProfile();
 
+  return (
+    <>
       <RouterProvider
         router={RouterSettings}
         fallbackElement={<>Loading...</>}
       />
-    </ThemeProvider>
+
+      <Loader />
+    </>
   );
 };
 
