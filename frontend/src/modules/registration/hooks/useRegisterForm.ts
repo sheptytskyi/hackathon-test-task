@@ -6,15 +6,15 @@ import { ICreateUserRequest } from '@app/services/users/types.ts';
 
 const schema = yup.object().shape({
   first_name: yup.string().required(Errors.Required),
-  second_name: yup.string().required(Errors.Required),
+  last_name: yup.string().required(Errors.Required),
   user_type: yup.string().required(Errors.Required),
   email: yup.string().email(Errors.EmailInvalid).required(Errors.Required),
-  password_1: yup.string().required(Errors.Required),
+  password: yup.string().required(Errors.Required),
   password_2: yup
     .string()
     .required(Errors.Required)
     .test('passwords-match', Errors.PasswordsMatch, function (value) {
-      return this.parent.password_1 === value;
+      return this.parent.password === value;
     }),
 });
 
@@ -24,10 +24,10 @@ const useRegisterForm = () => {
     resolver: yupResolver(schema) as Resolver<ICreateUserRequest>,
     defaultValues: {
       first_name: '',
-      second_name: '',
+      last_name: '',
       user_type: UserTypes.NeedHelp,
       email: '',
-      password_1: '',
+      password: '',
       password_2: '',
     },
   });

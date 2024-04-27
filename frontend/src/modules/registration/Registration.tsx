@@ -7,14 +7,14 @@ import {
   TextLink,
 } from '@ui';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { APP_TITLE } from '@constants';
+import { APP_TITLE, UserTypes } from '@constants';
 import { Routes } from '@router';
 import useRegisterForm from '@modules/registration/hooks/useRegisterForm.ts';
 import useCreateUser from '@modules/registration/hooks/useCreateUser.ts';
 
 const typeOptions = [
-  { value: 'need_help', label: 'Донатер' },
-  { value: 'help_others', label: 'Отримувач' },
+  { value: UserTypes.GiveHelp, label: 'Донатер' },
+  { value: UserTypes.NeedHelp, label: 'Отримувач' },
 ];
 
 const Registration: FC = () => {
@@ -31,12 +31,12 @@ const Registration: FC = () => {
         <Stack width="100%" pt={8} gap={4}>
           <Stack flexDirection="row" gap={4}>
             <ControlledTextField name="first_name" label="Ім'я" />
-            <ControlledTextField name="second_name" label="Прізвище" />
+            <ControlledTextField name="last_name" label="Прізвище" />
           </Stack>
 
           <Stack flexDirection="row" gap={4}>
             <ControlledTextField
-              name="password_1"
+              name="password"
               label="Пароль"
               type="password"
               triggerFields={['password_2']}
