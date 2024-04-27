@@ -36,9 +36,11 @@ const Footer: FC = () => {
             </Typography>
 
             <Stack mt={2}>
-              <TextLink to={`tel:${CONTACTS.PHONE}`}>{CONTACTS.PHONE}</TextLink>
+              <TextLink color="common.white" to={`tel:${CONTACTS.PHONE}`}>
+                {CONTACTS.PHONE}
+              </TextLink>
 
-              <TextLink to={`mailto:${CONTACTS.PHONE}`}>
+              <TextLink color="common.white" to={`mailto:${CONTACTS.PHONE}`}>
                 {CONTACTS.EMAIL}
               </TextLink>
             </Stack>

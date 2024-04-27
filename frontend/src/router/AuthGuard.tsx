@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Routes } from '@router/index.ts';
 import { selectAccessToken } from '@app/slices/auth.ts';
 import { useAppSelector } from '@hooks/store.ts';
+import Routes from '@router/routes.ts';
 
 type Props = {
   children: ReactNode;
@@ -16,7 +16,7 @@ const AuthGuard: FC<Props> = ({ children, shouldBeLogged = true }) => {
     return <>{children}</>;
   }
 
-  return <Navigate to={Routes.Login} />;
+  return <Navigate to={accessToken ? Routes.Advertisements : Routes.Login} />;
 };
 
 export default AuthGuard;

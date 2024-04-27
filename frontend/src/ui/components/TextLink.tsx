@@ -10,7 +10,7 @@ type Props = PropsWithChildren<{
 export const TextLink: FC<Props> = ({
   children,
   to,
-  color = 'common.white',
+  color = 'common.black',
 }) => {
   return (
     <Typography

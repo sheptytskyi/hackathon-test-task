@@ -6,8 +6,8 @@ export const AppWrapper = styled(Stack)(({ theme }) => ({
 }));
 
 export const PageWrapper = styled(Stack)({
-  marginTop: '80px',
-  height: 'calc(100dvh - 80px)',
+  marginTop: '70px',
+  height: 'calc(100dvh - 70px)',
   overflowY: 'auto',
 });
 
@@ -16,4 +16,5 @@ export const ContentWrapper = styled(Stack)(({ theme }) => ({
   width: '100%',
   maxWidth: '1200px',
   margin: '0 auto',
+  minHeight: '70dvh',
 }));
