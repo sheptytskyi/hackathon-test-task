@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+# Hackaton Test Task [Frontend]
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a test task for the hackaton. The task is to create a mvp of a simple web application that allows people to create advertisements about their needs. There should be 2 roles: donater and reciever. Reciever can create an advertisement about his needs and donater can see the list of advertisements and choose one to fulfill.
 
-Currently, two official plugins are available:
+---
+### How tu run the project:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+In **DEV mode**:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+In **PROD mode**:
+
+```bash
+docker-compose up --build
+```
+
+After that you can open the project in your browser by going to the following link: [http://localhost:8080](http://localhost:8080)
+
+
+---
+
+Troubleshooting:
+
+(Windows)
+```bash
+If Docker Desktop isnt prompting you for permission, you might need to manually grant it access to your project directory. You can do this by going to Docker Desktop settings:
+- Open Docker Desktop.
+- Go to "Settings" from the Docker Desktop menu.
+- Navigate to the "Resources" section.
+- Select "File Sharing" or a similar option.
+- Add your project directory (absolute\path\hackathon-test-task\frontend) to the list of shared directories.
+- Save your changes and try running `docker-compose up --build` again.
+```
