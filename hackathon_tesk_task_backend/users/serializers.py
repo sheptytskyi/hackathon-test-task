@@ -21,3 +21,9 @@ class UserSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return CustomUserModel.objects.create_user(**validated_data)
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUserModel
+        fields = ('email', 'first_name', 'last_name', 'user_type', 'date_joined')
