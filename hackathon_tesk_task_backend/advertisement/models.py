@@ -1,13 +1,17 @@
-from datetime import datetime
+from datetime import date
 
 from django.db import models
-from ..users.models import CustomUserModel
+from users.models import CustomUserModel
 from datetime import timedelta
 from django.utils import timezone
 
 
 def tomorrow():
     return timezone.now() + timedelta(days=1)
+
+
+def img_path(instance, filename=None):
+    return f'advertisement_pictures/{date.today()}/{instance.author.id}/{filename}'
 
 
 class StatusChoices(models.TextChoices):
@@ -40,8 +44,9 @@ class Advertisement(models.Model):
     description = models.TextField(verbose_name="Опис")
     categories = models.ManyToManyField(Category)
     location = models.CharField(verbose_name="Місцезнаходження", max_length=99)
-    picture = models.ImageField(upload_to=f'advertisement_pictures/{datetime.today()}/{id}', null=True)
-    status = models.CharField(verbose_name="Статус", choices=StatusChoices.choices, max_length=99)
+    picture = models.ImageField(upload_to=img_path, null=True)
+    status = models.CharField(verbose_name="Статус", choices=StatusChoices.choices,
+                              default=StatusChoices.active, max_length=99)
     time_validity = models.DateTimeField(verbose_name="Виконати до", default=tomorrow)
     priority = models.CharField(verbose_name="Статус", choices=PriorityChoices.choices, max_length=99)
 
@@ -51,4 +56,4 @@ class Advertisement(models.Model):
         verbose_name_plural = 'Оголошення'
 
     def __str__(self) -> str:
-        return str(self.id) + str(self.title)
+        return str(self.id) + " " + str(self.title)
