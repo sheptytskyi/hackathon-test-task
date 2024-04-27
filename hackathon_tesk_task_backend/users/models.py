@@ -1,12 +1,12 @@
-from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import gettext_lazy as _
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 
 class UserTypeChoices(models.TextChoices):
-    needs = 'needs', 'Потребує допомоги'
-    helper = 'helper', 'Надає допомогу'
+    needs = "needs", "Потребує допомоги"
+    helper = "helper", "Надає допомогу"
 
 
 class CustomUserManager(BaseUserManager):
@@ -34,20 +34,20 @@ class CustomUserManager(BaseUserManager):
 class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
-    email = models.EmailField(verbose_name='Електрона пошта', unique=True, db_index=True)
-    first_name = models.CharField(verbose_name='Імʼя')
-    last_name = models.CharField(verbose_name='Прізвище')
-    user_type = models.CharField(verbose_name='Тип користувача', choices=UserTypeChoices.choices, max_length=99)
-    is_staff = models.BooleanField(verbose_name='Персонал', default=False)
-    is_active = models.BooleanField(verbose_name='Активний', default=True)
-    date_joined = models.DateTimeField(verbose_name='Дата приєднання', default=timezone.now)
+    email = models.EmailField(verbose_name="Електрона пошта", unique=True, db_index=True)
+    first_name = models.CharField(verbose_name="Імʼя")
+    last_name = models.CharField(verbose_name="Прізвище")
+    user_type = models.CharField(verbose_name="Тип користувача", choices=UserTypeChoices.choices, max_length=99)
+    is_staff = models.BooleanField(verbose_name="Персонал", default=False)
+    is_active = models.BooleanField(verbose_name="Активний", default=True)
+    date_joined = models.DateTimeField(verbose_name="Дата приєднання", default=timezone.now)
 
     objects = CustomUserManager()
 
     class Meta:
-        db_table = 'users'
-        verbose_name = 'Користувач'
-        verbose_name_plural = 'Користувачі'
+        db_table = "users"
+        verbose_name = "Користувач"
+        verbose_name_plural = "Користувачі"
 
     def __str__(self) -> str:
         return self.email

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUserModel, UserTypeChoices
+from .models import UserTypeChoices, CustomUserModel
 
 
 class UserSerializer(serializers.Serializer):
@@ -11,8 +11,8 @@ class UserSerializer(serializers.Serializer):
     password_2 = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        password = data.get('password')
-        password_confirm = data.pop('password_2', None)
+        password = data.get("password")
+        password_confirm = data.pop("password_2", None)
 
         if password != password_confirm:
             raise serializers.ValidationError("Passwords do not match")
