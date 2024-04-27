@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "rest_framework_api_key",
     "advertisement",
     "users",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -144,6 +145,7 @@ MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework_api_key.permissions.HasAPIKey",
     ]
