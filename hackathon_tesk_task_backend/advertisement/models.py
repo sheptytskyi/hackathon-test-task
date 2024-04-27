@@ -11,13 +11,12 @@ def tomorrow():
 
 
 def img_path(instance, filename=None):
-    return f'advertisement_pictures/{date.today()}/{instance.author.id}/{filename}'
+    return f'advertisement_pictures/{date.today()}/{instance.advertisement.id}/{filename}'
 
 
 class StatusChoices(models.TextChoices):
     active = 'active', 'Активне'
     closed = 'closed', "Закрите"
-    completed = 'completed', 'Виконане'
 
 
 class PriorityChoices(models.TextChoices):
@@ -38,17 +37,21 @@ class Category(models.Model):
 
 
 class Advertisement(models.Model):
-    id = models.AutoField(primary_key=True)
-    author = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE)
+    # id = models.AutoField(primary_key=True)
+    author = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
     title = models.CharField(verbose_name="Заголовок", max_length=99)
     description = models.TextField(verbose_name="Опис")
     categories = models.ManyToManyField(Category)
     location = models.CharField(verbose_name="Місцезнаходження", max_length=99)
-    picture = models.ImageField(upload_to=img_path, null=True)
     status = models.CharField(verbose_name="Статус", choices=StatusChoices.choices,
                               default=StatusChoices.active, max_length=99)
     time_validity = models.DateTimeField(verbose_name="Виконати до", default=tomorrow)
-    priority = models.CharField(verbose_name="Статус", choices=PriorityChoices.choices, max_length=99)
+    priority = models.CharField(verbose_name="Пріоритет", choices=PriorityChoices.choices, max_length=99)
+    contacts = models.TextField(verbose_name='Контакти', max_length=99)
+
+    @property
+    def user_name(self):
+        return self.author.first_name
 
     class Meta:
         db_table = 'advertisements'
@@ -57,3 +60,16 @@ class Advertisement(models.Model):
 
     def __str__(self) -> str:
         return str(self.id) + " " + str(self.title)
+
+
+class Picture(models.Model):
+    picture = models.ImageField(verbose_name='Фотографія', upload_to=img_path, null=True, blank=True)
+    advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        db_table = 'Picture'
+        verbose_name = 'Картинка'
+        verbose_name_plural = 'Картинки'
+
+    def __str__(self) -> str:
+        return str(self.id) + " " + str(self.advertisement)
