@@ -1,9 +1,9 @@
-from datetime import date
+from datetime import date, timedelta
 
 from django.db import models
-from users.models import CustomUserModel
-from datetime import timedelta
 from django.utils import timezone
+
+from users.models import CustomUserModel
 
 
 def tomorrow():
@@ -37,7 +37,6 @@ class Category(models.Model):
 
 
 class Advertisement(models.Model):
-    # id = models.AutoField(primary_key=True)
     author = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
     title = models.CharField(verbose_name="Заголовок", max_length=99)
     description = models.TextField(verbose_name="Опис")

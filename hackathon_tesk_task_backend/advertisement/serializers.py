@@ -1,9 +1,8 @@
+from django.db import transaction
 from rest_framework import serializers
-from .models import Advertisement, Category, Picture, PriorityChoices, StatusChoices
-from users.models import CustomUserModel
-from users.serializers import UserSerializer
-from django.core.exceptions import ValidationError
-from rest_framework.fields import CurrentUserDefault
+
+from .models import (Advertisement, Category, Picture, PriorityChoices,
+                     StatusChoices)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -48,19 +47,17 @@ class AdvertisementSerializer(serializers.Serializer):
         pictures_data = validated_data.pop('pictures', None)
         contacts_data = validated_data.pop('contacts', None)
 
-        email = contacts_data.get('email', None)
-
         author = self.context['request'].user
 
-        advertisement = Advertisement.objects.create(author=author, contacts=contacts_data, **validated_data)
+        with transaction.atomic():
+            advertisement = Advertisement.objects.create(author=author, contacts=contacts_data, **validated_data)
 
-        for category_data in categories_data:
-            category = category_data
-            advertisement.categories.add(category)
+            for category_data in categories_data:
+                advertisement.categories.add(category_data)
 
-        if pictures_data:
-            for picture_data in pictures_data:
-                Picture.objects.create(advertisement=advertisement, picture=picture_data)
+            if pictures_data:
+                for picture_data in pictures_data:
+                    Picture.objects.create(advertisement=advertisement, picture=picture_data)
 
         return advertisement
 
