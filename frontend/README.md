@@ -18,7 +18,7 @@ In **PROD mode**:
 docker-compose up --build
 ```
 
-After that you can open the project in your browser by going to the following link: [http://localhost:8080](http://localhost:8080)
+After that you can open the project in your browser by going to the following link: [http://localhost:3000](http://localhost:3000)
 
 
 ---
