@@ -23,8 +23,12 @@
 - Docker
 - TypeScript
 - React
+
 <hr>
 
+<b>Документація на проект: documentation.pdf</b>
+
+<hr>
 
 Команда яка виконала цей проект: Діти Ньютона
 
