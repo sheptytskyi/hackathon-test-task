@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Centered, TextLink } from '@ui';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { APP_TITLE } from '@constants';
 import useLoginForm from '@modules/login/hooks/useLoginForm.ts';
 import { FormProvider } from 'react-hook-form';
 import { ControlledTextField } from '@ui';
@@ -16,7 +15,7 @@ const Login: FC = () => {
     <FormProvider {...form}>
       <Centered alignItems="flex-start">
         <Typography variant="h2" color="primary.main">
-          Вітаємо у {APP_TITLE}!
+          З поверненням!
         </Typography>
 
         <Stack width="100%" pt={5} gap={4}>
