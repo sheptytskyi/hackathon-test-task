@@ -20,6 +20,9 @@ export type ICreateUserRequest = {
 };
 
 export interface IProfile {
-  // TODO: Add fields
+  first_name: string;
+  second_name: string;
+  email: string;
+  date_joined: string;
   user_type: UserTypes;
 }

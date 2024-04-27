@@ -1,1 +1,1 @@
-export { default } from './mui-theme';
+export { default, pallete } from './mui-theme';

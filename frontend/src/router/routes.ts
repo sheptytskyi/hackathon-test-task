@@ -5,6 +5,7 @@ enum Routes {
   Advertisements = '/advertisements',
   Advertisement = '/advertisements/:adId',
   MyAdvertisements = '/my-advertisements',
+  MyProfile = '/my-profile',
 }
 
 export default Routes;

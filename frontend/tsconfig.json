@@ -23,6 +23,7 @@
       "@router/*": ["router/*"],
       "@router": ["router"],
       "@ui/*": ["ui/*"],
+      "@ui": ["ui"],
       "@theme/*": ["theme/*"],
       "@theme": ["theme"],
       "@app/*": ["app/*"],
