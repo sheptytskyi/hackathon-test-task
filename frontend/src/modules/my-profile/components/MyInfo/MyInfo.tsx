@@ -11,7 +11,7 @@ const MyInfo: FC = () => {
   const [
     {
       first_name = 'Volodymyr',
-      second_name = 'Melnyk',
+      last_name = 'Melnyk',
       email = 'fron10der@gmail.com',
       date_joined = '2021-10-10',
       user_type = UserTypes.GiveHelp,
@@ -27,7 +27,7 @@ const MyInfo: FC = () => {
         </Grid>
 
         <Grid item xs={6}>
-          <InfoItem title="Прізвище">{second_name}</InfoItem>
+          <InfoItem title="Прізвище">{last_name}</InfoItem>
         </Grid>
 
         <Grid item xs={6}>

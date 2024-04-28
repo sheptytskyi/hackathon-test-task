@@ -33,7 +33,7 @@ const authApi = baseApi.injectEndpoints({
 export const usersApi = authorizedApi.injectEndpoints({
   endpoints: (builder) => ({
     getProfile: builder.query<IProfile, void>({
-      query: () => '/profile/',
+      query: () => '/users/profile/',
       providesTags: [QueryTags.User],
     }),
   }),

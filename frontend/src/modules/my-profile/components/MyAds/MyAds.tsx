@@ -1,28 +1,34 @@
 import { FC } from 'react';
 import { Section } from '@ui';
-import { useGetMyAdsQuery } from '@app/services/ads';
+import { useDeleteMyAdMutation, useGetMyAdsQuery } from '@app/services/ads';
 import useLoader from '@hooks/useLoader.ts';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
+import AdCard from '@modules/my-profile/components/AdCard.tsx';
+import { useSnackbar } from 'notistack';
 
 const MyAds: FC = () => {
-  const {
-    data = {
-      id: 1,
-      title: 'Title',
-      description: 'Description',
-    },
-    isLoading,
-    isFetching,
-  } = useGetMyAdsQuery();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { data, isLoading, isFetching } = useGetMyAdsQuery();
   const isLoadingOrFetching = isLoading || isFetching;
-  useLoader(isLoadingOrFetching, 'get-my-ads');
+
+  const [deleteAd, deleteState] = useDeleteMyAdMutation();
+
+  useLoader(
+    isLoadingOrFetching || deleteState.isLoading,
+    'get-my-ads-or-delete-ad',
+  );
+
+  const handleDelete = async () => {
+    try {
+      await deleteAd().unwrap();
+      enqueueSnackbar('Оголошення видалено', { variant: 'success' });
+    } catch (e) {
+      enqueueSnackbar('Помилка видалення оголошення. Спробуйте ще раз', {
+        variant: 'error',
+      });
+    }
+  };
 
   return (
     <Section title="Мої оголошення">
@@ -34,22 +40,11 @@ const MyAds: FC = () => {
       )}
 
       {data && !isLoadingOrFetching && (
-        <Card sx={{ width: 300 }}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {data.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {data.description}
-            </Typography>
-          </CardContent>
-
-          <CardActions>
-            <Button size="small" color="error" fullWidth>
-              Видалити
-            </Button>
-          </CardActions>
-        </Card>
+        <AdCard
+          title={data.title}
+          description={data.description}
+          onDelete={handleDelete}
+        />
       )}
     </Section>
   );

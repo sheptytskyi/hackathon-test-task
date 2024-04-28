@@ -21,7 +21,7 @@ const baseQuery = fetchBaseQuery({
     const token = (getState() as RootState).auth?.access;
 
     if (token) {
-      headers.set(ACCESS_TOKEN_HEADER_NAME, token);
+      headers.set(ACCESS_TOKEN_HEADER_NAME, `Bearer ${token}`);
     }
 
     headers.set(API_KEY_HEADER_NAME, API_KEY);

@@ -25,22 +25,22 @@ export const adsAuthApi = authorizedApi.injectEndpoints({
     }),
 
     getMyAds: builder.query<IMyAd, void>({
-      query: () => '/my-ads/',
+      query: () => '/advertisement/get_profile_advert/',
       providesTags: [QueryTags.Ads],
     }),
 
     createAd: builder.mutation<void, ICreateAdRequest>({
       query: (body) => ({
-        url: '/create_help_advert/',
+        url: '/advertisement/create_help_advert/',
         method: 'POST',
         body,
       }),
       invalidatesTags: [QueryTags.Ads],
     }),
 
-    deleteMyAd: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/my-ads/${id}/`,
+    deleteMyAd: builder.mutation<void, void>({
+      query: () => ({
+        url: `/advertisement/delete_help_advert/`,
         method: 'DELETE',
       }),
       invalidatesTags: [QueryTags.Ads],
