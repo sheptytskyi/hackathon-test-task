@@ -10,11 +10,13 @@ const useCreateAd = (onClose: () => void) => {
 
   const handleCreateAd = async (values: FormValues) => {
     try {
-      const { categories, time_validity, ...rest } = values;
+      const { categories, time_validity, contacts, ...rest } = values;
 
       await create({
         categories: categories.map((c) => c.value),
         time_validity: time_validity.toISOString(),
+        contact_email: contacts.email,
+        contact_phone: contacts.phone,
         ...rest,
       }).unwrap();
 

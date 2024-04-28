@@ -9,6 +9,10 @@ import {
 import { Close } from '@mui/icons-material';
 import { useGetOneAdQuery } from '@app/services/ads';
 import useLoader from '@hooks/useLoader.ts';
+import { TextLink } from '@ui';
+import useProfile from '@hooks/useProfile.ts';
+import { UserTypes } from '@constants';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 type Props = {
   open: boolean;
@@ -17,7 +21,10 @@ type Props = {
 };
 
 const ContactsModal: FC<Props> = (props) => {
-  const { data, isLoading } = useGetOneAdQuery(props.id);
+  const [{ user_type }] = useProfile();
+  const { data, isLoading } = useGetOneAdQuery(
+    !user_type || user_type === UserTypes.NeedHelp ? skipToken : props.id,
+  );
   useLoader(isLoading, 'get-one-ad');
 
   return (
@@ -42,15 +49,26 @@ const ContactsModal: FC<Props> = (props) => {
           position: 'absolute',
           right: 8,
           top: 8,
-          color: (theme) => theme.palette.grey[500],
+          color: (theme) => theme.palette.grey[700],
         }}
       >
         <Close />
       </IconButton>
 
       <DialogContent dividers>
-        <Typography gutterBottom>{data?.email}</Typography>
-        <Typography gutterBottom>{data?.phone}</Typography>
+        <Typography gutterBottom variant="h4">
+          E-mail:{' '}
+          <TextLink to={`mailto:${data?.contact_email}`}>
+            {data?.contact_email}
+          </TextLink>
+        </Typography>
+
+        <Typography gutterBottom variant="h4">
+          Телефон:{' '}
+          <TextLink to={`tel:${data?.contact_phone}`}>
+            {data?.contact_phone}
+          </TextLink>
+        </Typography>
       </DialogContent>
     </Dialog>
   );

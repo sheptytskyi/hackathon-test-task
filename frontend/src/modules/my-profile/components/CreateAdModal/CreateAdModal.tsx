@@ -25,7 +25,6 @@ import { ControlledAutocomplete } from '@ui/inputs/ControlledAutocomplete.tsx';
 import {
   AdCategoriesOptions,
   AdPriorityOptions,
-  AdStatusOptions,
 } from '@constants/entities/ad.ts';
 import { ControlledFilesUpload } from '@ui/inputs/ControlledFilesUpload.tsx';
 
@@ -112,15 +111,7 @@ const CreateAdModal: FC<Props> = (props) => {
             <ControlledTextField name="location" label={'Локація'} />
           </Grid>
 
-          <Grid item xs={6}>
-            <ControlledSelect
-              name="status"
-              label={'Статус оголошення'}
-              options={AdStatusOptions}
-            />
-          </Grid>
-
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <ControlledSelect
               name="priority"
               label={'Пріоритет'}

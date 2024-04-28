@@ -18,6 +18,7 @@ import {
 import dayjs from 'dayjs';
 import useProfile from '@hooks/useProfile.ts';
 import ContactsModal from '@modules/advertisements/components/ContactsModal.tsx';
+import { BASE_URL, UserTypes } from '@constants';
 
 type Props = {
   ad: IAd;
@@ -36,19 +37,24 @@ const AdCard: FC<Props> = ({ ad }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [{ user_type }] = useProfile();
   const {
+    id,
     title = 'No title',
     description = 'No description',
     categories = [1],
     location = 'No location',
     pictures = [],
     status = 'active',
-    time_validity = 'No time validity',
+    time_validity = '',
     priority = 'moderate',
   } = ad;
 
   return (
     <Wrapper container spacing={3} xs={12}>
-      <ContactsModal open={isOpened} onClose={() => setIsOpened(false)} />
+      <ContactsModal
+        id={id}
+        open={isOpened}
+        onClose={() => setIsOpened(false)}
+      />
 
       {user_type === UserTypes.GiveHelp && (
         <Box position="absolute" right={25} top={25}>
@@ -96,17 +102,19 @@ const AdCard: FC<Props> = ({ ad }) => {
         <InfoItem title="Пріоритет">{ReadableAdPriority[priority]}</InfoItem>
       </Grid>
 
-      <Grid item xs={12}>
-        <InfoItem title="Фотографії">
-          <ImageList cols={3}>
-            {pictures.map((picture) => (
-              <ImageListItem key={picture.picture}>
-                <img src={picture.picture} alt={title} />
-              </ImageListItem>
-            ))}
-          </ImageList>
-        </InfoItem>
-      </Grid>
+      {!!pictures?.length && (
+        <Grid item xs={12}>
+          <InfoItem title="Фотографії">
+            <ImageList cols={3}>
+              {pictures.map((picture) => (
+                <ImageListItem key={picture.picture}>
+                  <img src={`${BASE_URL}${picture.picture}`} alt={title} />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </InfoItem>
+        </Grid>
+      )}
     </Wrapper>
   );
 };
