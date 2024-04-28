@@ -1,17 +1,30 @@
-import { IProfile } from '@app/services/users/types';
 import authorizedApi from '@app/services/authorizedApi';
 import baseApi from '@app/services/baseApi';
 import { QueryTags } from '@app';
 import {
+  IAdsParams,
   IAllAdsResponse,
   ICreateAdRequest,
   IMyAd,
 } from '@app/services/ads/types.ts';
+import queryString from 'query-string';
 
 const adsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAds: builder.query<IAllAdsResponse, void>({
-      query: () => '/ads/',
+    getAds: builder.query<IAllAdsResponse, IAdsParams>({
+      query: (params) => ({
+        url: `/advertisement/get_all_advert/?${queryString.stringify(
+          {
+            categories: params.categories?.length
+              ? params.categories
+              : undefined,
+            priority: params.priority,
+          },
+          {
+            arrayFormat: 'bracket',
+          },
+        )}`,
+      }),
       providesTags: [QueryTags.Ads],
     }),
   }),
@@ -19,8 +32,8 @@ const adsApi = baseApi.injectEndpoints({
 
 export const adsAuthApi = authorizedApi.injectEndpoints({
   endpoints: (builder) => ({
-    getOneAd: builder.query<IProfile, string>({
-      query: (id: string) => `/ads/${id}/`,
+    getOneAd: builder.query<{ email: string; phone: string }, string>({
+      query: (id: string) => `/advertisement/${id}/contacts`,
       providesTags: [QueryTags.Ad],
     }),
 

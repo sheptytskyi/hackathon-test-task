@@ -23,17 +23,20 @@ export type IMyAd = {
 };
 
 export type IAd = {
-  advert_id: number;
+  id: number;
   title: string;
   description: string;
   categories: string[];
   location: string;
-  pictures: string[];
+  pictures: { picture: string }[];
   status: AdStatus;
   time_validity: string;
   priority: AdPriority;
 };
 
-export type IAllAdsResponse = {
-  adrverties: IAd[];
-};
+export type IAllAdsResponse = IAd[];
+
+export interface IAdsParams {
+  categories?: number[];
+  priority?: AdPriority;
+}
