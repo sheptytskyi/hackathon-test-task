@@ -35,11 +35,11 @@ export const ControlledFilesUpload: FC<ControlledFilesUploadProps> = ({
 
           {field.value && (
             <ImageList sx={{ width: 500 }} cols={3} rowHeight={164}>
-              {Array.from(field.value).map((file: File) => (
-                <ImageListItem key={file.name}>
+              {Array.from(field.value).map((file: unknown) => (
+                <ImageListItem key={(file as File).name}>
                   <img
-                    src={URL.createObjectURL(file)}
-                    alt={file.name}
+                    src={URL.createObjectURL(file as File)}
+                    alt={(file as File).name}
                     loading="lazy"
                   />
                 </ImageListItem>
