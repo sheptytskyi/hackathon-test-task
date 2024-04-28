@@ -4,7 +4,6 @@ enum Routes {
   Register = '/register',
   Advertisements = '/advertisements',
   Advertisement = '/advertisements/:adId',
-  MyAdvertisements = '/my-advertisements',
   MyProfile = '/my-profile',
 }
 

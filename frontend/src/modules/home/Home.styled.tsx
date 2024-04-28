@@ -16,6 +16,6 @@ export const ContentWrapper = styled(Stack)(({ theme }) => ({
   width: '100%',
   maxWidth: '1000px',
   margin: '0 auto',
-  minHeight: '-webkit-fill-available',
-  // flex: 1,
+  flex: 1,
+  paddingBottom: 100,
 }));
