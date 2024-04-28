@@ -175,4 +175,4 @@ CORS_ALLOW_METHODS = (
     "PUT",
 )
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:1337", "http://144.126.246.51:1337"]
