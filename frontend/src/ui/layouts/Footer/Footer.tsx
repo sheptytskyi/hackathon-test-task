@@ -25,9 +25,9 @@ const Footer: FC = () => {
 
       <ContactsWrapper>
         <Grid container>
-          <Grid item sm={6}>
+          <Grid item sm={12}>
             <Typography variant="h5" color="common.white">
-              Люди які прийняли участь в розробці (тг аккаунит):
+              Люди які прийняли участь в розробці:
             </Typography>
 
             <Stack mt={2}>

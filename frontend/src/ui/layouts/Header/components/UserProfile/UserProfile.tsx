@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { Routes } from '@router';
 
 const UserProfile: FC = () => {
-  const { isLogged, first_name = 'User' } = useProfile();
+  const [{ isLogged, first_name = 'User' }] = useProfile();
   const handleLogout = useLogout();
 
   if (!isLogged) return <Box width={60} />;

@@ -6,12 +6,19 @@ import { store } from '@app';
 import muiTheme from '@theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
+import { Action, StyledMaterialDesignContent } from '@ui';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <SnackbarProvider
       maxSnack={5}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      preventDuplicate
+      action={Action}
+      Components={{
+        success: StyledMaterialDesignContent,
+        error: StyledMaterialDesignContent,
+      }}
     >
       <Provider store={store}>
         <ThemeProvider theme={muiTheme}>
