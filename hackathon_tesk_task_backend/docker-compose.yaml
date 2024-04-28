@@ -5,7 +5,7 @@ services:
     build: .
     volumes:
       - .:/hackathon_backend
-    ports:
+    expose:
       - 8080:8080
     env_file:
       - .env
@@ -13,7 +13,7 @@ services:
       sh -c "python manage.py makemigrations \
       && python manage.py migrate \
       && python manage.py collectstatic --noinput \
-      && python manage.py runserver 0.0.0.0:8080"
+      && gunicorn hackathon_test_task.wsgi:application --bind 0.0.0.0:8080
     depends_on:
       - hackathon_backend_db
 
@@ -27,6 +27,15 @@ services:
       - 5432:5432
     expose:
       - 5432
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - hackathon_backend
 
 
 volumes:
