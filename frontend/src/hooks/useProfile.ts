@@ -10,6 +10,7 @@ const useProfile = () => {
 
   const { data, isLoading, isFetching, ...options } = useGetProfileQuery(
     accessToken ? undefined : skipToken,
+    { refetchOnMountOrArgChange: true, refetchOnReconnect: true },
   );
 
   useLoader(isLoading || isFetching, 'get-me');
