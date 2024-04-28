@@ -3,13 +3,13 @@ import { AdPriority, AdStatus } from '@constants/entities/ad.ts';
 export type ICreateAdRequest = {
   title: string;
   description: string;
-  categories: string[];
+  categories: number[];
   location: string;
-  contats: {
+  contacts: {
     email: string;
     phone: string;
   };
-  pictures: File[];
+  pictures: FileList | null;
   status: AdStatus;
   time_validity: string;
   priority: AdPriority;

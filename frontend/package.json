@@ -17,6 +17,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
+    "@mui/x-date-pickers": "^7.3.1",
     "@reduxjs/toolkit": "^2.2.3",
     "async-mutex": "^0.5.0",
     "dayjs": "^1.11.10",

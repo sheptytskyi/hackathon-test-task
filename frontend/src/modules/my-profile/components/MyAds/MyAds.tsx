@@ -1,13 +1,15 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Section } from '@ui';
 import { useDeleteMyAdMutation, useGetMyAdsQuery } from '@app/services/ads';
 import useLoader from '@hooks/useLoader.ts';
 import { Button, Stack, Typography } from '@mui/material';
 import AdCard from '@modules/my-profile/components/AdCard.tsx';
 import { useSnackbar } from 'notistack';
+import CreateAdModal from '@modules/my-profile/components/CreateAdModal/CreateAdModal.tsx';
 
 const MyAds: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const [isCreateAdModalOpen, setIsCreateAdModalOpen] = useState(false);
 
   const { data, isLoading, isFetching } = useGetMyAdsQuery();
   const isLoadingOrFetching = isLoading || isFetching;
@@ -31,22 +33,35 @@ const MyAds: FC = () => {
   };
 
   return (
-    <Section title="Мої оголошення">
-      {!data && !isLoadingOrFetching && (
-        <Stack gap={4} maxWidth={300}>
-          <Typography>У вас ще немає оголошень</Typography>
-          <Button variant="filled">Створити оголошення</Button>
-        </Stack>
-      )}
+    <>
+      <CreateAdModal
+        open={isCreateAdModalOpen}
+        onClose={() => setIsCreateAdModalOpen(false)}
+      />
 
-      {data && !isLoadingOrFetching && (
-        <AdCard
-          title={data.title}
-          description={data.description}
-          onDelete={handleDelete}
-        />
-      )}
-    </Section>
+      <Section title="Мої оголошення">
+        {!data && !isLoadingOrFetching && (
+          <Stack gap={4} maxWidth={300}>
+            <Typography>У вас ще немає оголошень</Typography>
+
+            <Button
+              variant="filled"
+              onClick={() => setIsCreateAdModalOpen(true)}
+            >
+              Створити оголошення
+            </Button>
+          </Stack>
+        )}
+
+        {data && !isLoadingOrFetching && (
+          <AdCard
+            title={data.title}
+            description={data.description}
+            onDelete={handleDelete}
+          />
+        )}
+      </Section>
+    </>
   );
 };
 

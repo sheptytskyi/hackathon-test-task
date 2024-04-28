@@ -215,9 +215,7 @@ const muiTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: pallete.common.white,
-          '& .MuiInputBase-root': {
-            padding: 0,
-          },
+          '& .MuiInputBase-root': {},
         },
       },
     },

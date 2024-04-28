@@ -30,11 +30,29 @@ export const adsAuthApi = authorizedApi.injectEndpoints({
     }),
 
     createAd: builder.mutation<void, ICreateAdRequest>({
-      query: (body) => ({
-        url: '/advertisement/create_help_advert/',
-        method: 'POST',
-        body,
-      }),
+      query: (body) => {
+        const formData = new FormData();
+        formData.append('title', body.title);
+        formData.append('description', body.description);
+        formData.append('location', body.location);
+        formData.append('status', body.status);
+        formData.append('priority', body.priority);
+        formData.append('time_validity', body.time_validity);
+        formData.append('categories', JSON.stringify(body.categories));
+        formData.append('contacts', JSON.stringify(body.contacts));
+
+        if (body.pictures) {
+          Array.from(body.pictures).forEach((picture) =>
+            formData.append('pictures', picture),
+          );
+        }
+
+        return {
+          url: '/advertisement/create_help_advert/',
+          method: 'POST',
+          body: formData,
+        };
+      },
       invalidatesTags: [QueryTags.Ads],
     }),
 
