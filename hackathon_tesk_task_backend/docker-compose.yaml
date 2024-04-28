@@ -13,7 +13,7 @@ services:
       sh -c "python manage.py makemigrations \
       && python manage.py migrate \
       && python manage.py collectstatic --noinput \
-      && gunicorn hackathon_test_task.wsgi:application --bind 0.0.0.0:8080
+      && gunicorn hackathon_test_task.wsgi:application --bind 0.0.0.0:8080"
     depends_on:
       - hackathon_backend_db
 
