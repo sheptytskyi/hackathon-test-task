@@ -12,6 +12,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class PictureSerializer(serializers.ModelSerializer):
+    picture = serializers.ImageField(
+        max_length=None, use_url=True
+    )
+
     class Meta:
         model = Picture
         fields = ['picture']
@@ -68,3 +72,12 @@ class GetAdvertisementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advertisement
         fields = ['id', 'title', 'description', 'user_name']
+
+
+class AdvertisementListSerializer(serializers.ModelSerializer):
+    pictures = PictureSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Advertisement
+        fields = ['id', 'title', 'description', 'categories', 'location',
+                  'pictures', 'status', 'time_validity', 'priority']
