@@ -134,6 +134,11 @@ const muiTheme = createTheme({
           },
         },
 
+        containedError: {
+          backgroundColor: pallete.error.main,
+          color: pallete.common.white,
+        },
+
         text: {
           color: pallete.common.black,
           backgroundColor: pallete.common.white,
@@ -213,6 +218,14 @@ const muiTheme = createTheme({
           '& .MuiInputBase-root': {
             padding: 0,
           },
+        },
+      },
+    },
+
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.05)',
         },
       },
     },

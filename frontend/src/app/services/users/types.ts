@@ -21,7 +21,7 @@ export type ICreateUserRequest = {
 
 export interface IProfile {
   first_name: string;
-  second_name: string;
+  last_name: string;
   email: string;
   date_joined: string;
   user_type: UserTypes;
