@@ -46,11 +46,12 @@ class Advertisement(models.Model):
                               default=StatusChoices.active, max_length=99)
     time_validity = models.DateTimeField(verbose_name="Виконати до", default=tomorrow)
     priority = models.CharField(verbose_name="Пріоритет", choices=PriorityChoices.choices, max_length=99)
-    contacts = models.TextField(verbose_name='Контакти', max_length=99)
+    contact_email = models.EmailField(verbose_name='Контактна пошта')
+    contact_phone = models.TextField(verbose_name='Контактний телефон')
 
     @property
     def user_name(self):
-        return self.author.first_name
+        return f'{self.author.first_name} {self.author.last_name}'
 
     class Meta:
         db_table = 'advertisements'
@@ -63,7 +64,11 @@ class Advertisement(models.Model):
 
 class Picture(models.Model):
     picture = models.ImageField(verbose_name='Фотографія', upload_to=img_path, null=True, blank=True)
-    advertisement = models.ForeignKey(Advertisement, on_delete=models.SET_NULL, null=True, blank=True)
+    advertisement = models.ForeignKey(
+        Advertisement,
+        related_name='pictures',
+        on_delete=models.SET_NULL,
+        null=True, blank=True)
 
     class Meta:
         db_table = 'Picture'

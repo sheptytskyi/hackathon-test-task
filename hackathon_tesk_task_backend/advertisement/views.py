@@ -1,49 +1,43 @@
 from rest_framework import status, generics
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.shortcuts import get_object_or_404
 
 from users.permissioins import IsNeedsUser
 
 from .models import Advertisement, StatusChoices
-from .serializers import AdvertisementSerializer, GetAdvertisementSerializer, AdvertisementListSerializer
+from .serializers import (AdvertisementSerializer, GetAdvertisementSerializer,
+                          AdvertisementListSerializer, AdvertisementDetailSerializer)
 
 
-class AdvertisementAPIView(GenericAPIView):
+class AdvertisementCreateAPIView(GenericAPIView):
     serializer_class = AdvertisementSerializer
     permission_classes = [IsNeedsUser]
-
-    def __get_advertisement(self, request):
-        advertisement = Advertisement.objects.filter(author=request.user,
-                                                     status=StatusChoices.active).first()
-        if not advertisement:
-            return None, Response({"error": "No active advertisements found for this user."},
-                                  status=status.HTTP_404_NOT_FOUND)
-        return advertisement, None
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request):
-        advertisement, response = self.__get_advertisement(request)
-        if response:
-            return response
 
-        serializer = GetAdvertisementSerializer(advertisement)
+class AdvertisementProfileAPIView(GenericAPIView):
+    serializer_class = GetAdvertisementSerializer
+
+    def get(self, request):
+        advertisements = Advertisement.objects.filter(author=request.user)
+        serializer = GetAdvertisementSerializer(advertisements, many=True)
         return Response(serializer.data)
 
-    def delete(self, request):
-        advertisement, response = self.__get_advertisement(request)
-        if response:
-            return response
 
+class AdvertisementDeleteAPIView(GenericAPIView):
+    def delete(self, request):
+        advertisement = get_object_or_404(Advertisement, author=request.user, status=StatusChoices.active)
         advertisement.status = StatusChoices.closed
         advertisement.save()
-        return Response(advertisement.id, status=status.HTTP_200_OK)
+        return Response({'advertisement_id': advertisement.id}, status=status.HTTP_200_OK)
 
 
 class AdvertisementListView(generics.ListAPIView):
@@ -51,3 +45,9 @@ class AdvertisementListView(generics.ListAPIView):
     queryset = Advertisement.objects.filter(status=StatusChoices.active)
     serializer_class = AdvertisementListSerializer
     filterset_fields = ['categories', 'priority']
+
+
+class AdvertisementDetailView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AdvertisementDetailSerializer
+    queryset = Advertisement.objects.filter(status=StatusChoices.active)
