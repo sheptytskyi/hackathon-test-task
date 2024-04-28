@@ -18,6 +18,7 @@ module.exports = {
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'prettier/prettier': 'error',
     "unused-imports/no-unused-imports": "error",
   },

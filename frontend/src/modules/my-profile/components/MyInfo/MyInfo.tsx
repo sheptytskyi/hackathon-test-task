@@ -2,21 +2,15 @@ import { FC } from 'react';
 import { InfoItem, Section } from '@ui';
 import useProfile from '@hooks/useProfile.ts';
 import { Button, Grid } from '@mui/material';
-import { ReadableUserTypes, UserTypes } from '@constants';
+import { ReadableUserTypes } from '@constants';
 import dayjs from 'dayjs';
 import { Logout } from '@mui/icons-material';
 import useLogout from '@hooks/useLogout.ts';
 
 const MyInfo: FC = () => {
-  const [
-    {
-      first_name = 'Volodymyr',
-      last_name = 'Melnyk',
-      email = 'fron10der@gmail.com',
-      date_joined = '2021-10-10',
-      user_type = UserTypes.GiveHelp,
-    },
-  ] = useProfile();
+  const [{ first_name, last_name, email, date_joined, user_type }] =
+    useProfile();
+
   const handleLogout = useLogout();
 
   return (

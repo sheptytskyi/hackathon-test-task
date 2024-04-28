@@ -7,26 +7,30 @@ import muiTheme from '@theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 import { Action, StyledMaterialDesignContent } from '@ui';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <SnackbarProvider
-      maxSnack={5}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      preventDuplicate
-      action={Action}
-      Components={{
-        success: StyledMaterialDesignContent,
-        error: StyledMaterialDesignContent,
-      }}
-    >
-      <Provider store={store}>
-        <ThemeProvider theme={muiTheme}>
-          <CssBaseline />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <SnackbarProvider
+        maxSnack={5}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        preventDuplicate
+        action={Action}
+        Components={{
+          success: StyledMaterialDesignContent,
+          error: StyledMaterialDesignContent,
+        }}
+      >
+        <Provider store={store}>
+          <ThemeProvider theme={muiTheme}>
+            <CssBaseline />
 
-          <App />
-        </ThemeProvider>
-      </Provider>
-    </SnackbarProvider>
+            <App />
+          </ThemeProvider>
+        </Provider>
+      </SnackbarProvider>
+    </LocalizationProvider>
   </React.StrictMode>,
 );
