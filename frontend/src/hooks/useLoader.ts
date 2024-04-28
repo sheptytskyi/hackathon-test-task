@@ -15,6 +15,7 @@ const useLoader = (loading: boolean, id: string): void => {
     return () => {
       dispatch(stopLoading(id));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, id]);
 };
 
