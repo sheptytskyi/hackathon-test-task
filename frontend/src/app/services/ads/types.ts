@@ -5,10 +5,8 @@ export type ICreateAdRequest = {
   description: string;
   categories: number[];
   location: string;
-  contacts: {
-    email: string;
-    phone: string;
-  };
+  contact_email: string;
+  contact_phone: string;
   pictures: FileList | null;
   status: AdStatus;
   time_validity: string;
@@ -16,24 +14,28 @@ export type ICreateAdRequest = {
 };
 
 export type IMyAd = {
-  advert_id: number;
+  id: number;
   user_name: string;
   title: string;
   description: string;
+  status: AdStatus;
 };
 
 export type IAd = {
-  advert_id: number;
+  id: number;
   title: string;
   description: string;
   categories: string[];
   location: string;
-  pictures: string[];
+  pictures: { picture: string }[];
   status: AdStatus;
   time_validity: string;
   priority: AdPriority;
 };
 
-export type IAllAdsResponse = {
-  adrverties: IAd[];
-};
+export type IAllAdsResponse = IAd[];
+
+export interface IAdsParams {
+  categories?: number[];
+  priority?: AdPriority;
+}

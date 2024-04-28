@@ -42,7 +42,6 @@ const schema = yup.object().shape({
       ),
   }),
   pictures: yup.mixed().required(Errors.Required),
-  status: yup.string().required(Errors.Required),
   time_validity: yup.mixed().required(Errors.Required),
   priority: yup.string().required(Errors.Required),
 });
@@ -61,7 +60,6 @@ const useAdForm = () => {
         phone: '',
       },
       pictures: null,
-      status: AdStatus.Active,
       time_validity: dayjs(),
       priority: AdPriority.Moderate,
     },
