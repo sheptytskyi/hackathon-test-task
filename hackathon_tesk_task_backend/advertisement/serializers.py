@@ -1,5 +1,3 @@
-import json
-
 from django.db import transaction
 from rest_framework import serializers
 
@@ -32,11 +30,11 @@ class AdvertisementSerializer(serializers.Serializer):
     author = serializers.CurrentUserDefault()
     categories = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), many=True)
     pictures = serializers.ListField(child=serializers.ImageField(), required=False)
-    contacts = ContactSerializer()
+    contact_email = serializers.EmailField()
+    contact_phone = serializers.CharField()
     title = serializers.CharField(max_length=99)
     description = serializers.CharField(max_length=256)
     location = serializers.CharField(max_length=99)
-    status = serializers.ChoiceField(choices=StatusChoices)
     time_validity = serializers.DateTimeField(required=False)
     priority = serializers.ChoiceField(choices=PriorityChoices)
 
@@ -51,19 +49,17 @@ class AdvertisementSerializer(serializers.Serializer):
     def create(self, validated_data):
         categories_data = validated_data.pop('categories', None)
         pictures_data = validated_data.pop('pictures', None)
-        contacts_data = validated_data.pop('contacts', None)
+        validated_data['status'] = StatusChoices.active
 
         author = self.context['request'].user
 
         with transaction.atomic():
-            advertisement = Advertisement.objects.create(author=author, contacts=contacts_data, **validated_data)
-
-            for category_data in categories_data:
-                advertisement.categories.add(category_data)
-
-            if pictures_data:
-                for picture_data in pictures_data:
-                    Picture.objects.create(advertisement=advertisement, picture=picture_data)
+            advertisement = Advertisement.objects.create(author=author, **validated_data)
+            advertisement.categories.add(*categories_data)
+            Picture.objects.bulk_create([
+                Picture(advertisement=advertisement, picture=picture_data)
+                for picture_data in pictures_data
+            ])
 
         return advertisement
 
@@ -73,29 +69,24 @@ class GetAdvertisementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Advertisement
-        fields = ['id', 'title', 'description', 'user_name']
+        fields = ['id', 'title', 'description', 'user_name', 'status']
 
 
 class AdvertisementListSerializer(serializers.ModelSerializer):
-    pictures = PictureSerializer(many=True, read_only=True)
+    pictures = serializers.SerializerMethodField()
 
     class Meta:
         model = Advertisement
         fields = ['id', 'title', 'description', 'categories', 'location',
                   'pictures', 'status', 'time_validity', 'priority']
 
+    def get_pictures(self, instance):
+        adv_picture = instance.pictures.all()
+        return PictureSerializer(instance=adv_picture, many=True).data
 
-class AdvertisementDetailSerializer(serializers.ModelSerializer):
-    pictures = PictureSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = Advertisement
-        fields = ['id', 'title', 'description', 'categories', 'location',
-                  'pictures', 'status', 'time_validity', 'priority', 'contacts']
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['contacts'] = json.loads(
-            representation['contacts'].replace("'", '"')
-        )
-        return representation
+class AdvertisementDetailSerializer(AdvertisementListSerializer):
+    class Meta(AdvertisementListSerializer.Meta):
+        fields = AdvertisementListSerializer.Meta.fields + [
+            'contact_email', 'contact_phone'
+        ]
