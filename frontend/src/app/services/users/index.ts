@@ -12,7 +12,7 @@ const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signIn: builder.mutation<ILoginResponse, ILoginRequest>({
       query: (body) => ({
-        url: '/login/',
+        url: '/users/login/',
         method: 'POST',
         body,
       }),
@@ -22,7 +22,7 @@ const authApi = baseApi.injectEndpoints({
 
     createUser: builder.mutation<void, ICreateUserRequest>({
       query: (body) => ({
-        url: '/registration/',
+        url: '/users/register/',
         method: 'POST',
         body,
       }),

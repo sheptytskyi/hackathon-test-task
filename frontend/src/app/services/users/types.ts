@@ -12,14 +12,17 @@ export type ILoginResponse = {
 
 export type ICreateUserRequest = {
   first_name: string;
-  second_name: string;
+  last_name: string;
   user_type: UserTypes;
   email: string;
-  password_1: string;
+  password: string;
   password_2: string;
 };
 
 export interface IProfile {
-  // TODO: Add fields
+  first_name: string;
+  second_name: string;
+  email: string;
+  date_joined: string;
   user_type: UserTypes;
 }

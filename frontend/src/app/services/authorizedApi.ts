@@ -16,7 +16,7 @@ import { RootState } from '@app/types';
 import { QueryTags } from '@app/services/tags.ts';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: BASE_URL,
+  baseUrl: BASE_URL + '/api',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth?.access;
 
@@ -43,7 +43,7 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
         const tokens = (api.getState() as RootState).auth;
         const refreshResult = await baseQuery(
           {
-            url: '/refresh/',
+            url: '/users/token/refresh/',
             method: 'POST',
             body: {
               access: tokens?.access,

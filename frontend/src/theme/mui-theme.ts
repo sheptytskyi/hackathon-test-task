@@ -1,26 +1,40 @@
 import { createTheme } from '@mui/material';
 
-const muiTheme = createTheme({
-  palette: {
-    primary: { main: '#1f78ff' },
-    common: {
-      white: '#ffffff',
-      black: '#444750',
-    },
-    grey: {
-      900: '#636362',
-      800: '#7c7c7c',
-      700: '#c3c3c2',
-      600: '#c7c7c7',
-      500: '#ececeb',
-      400: '#fbfbfa',
-    },
+export const pallete = {
+  primary: {
+    main: '#1f78ff',
+    light: '#f6f9fc',
   },
+  common: {
+    white: '#ffffff',
+    black: '#444750',
+  },
+  grey: {
+    900: '#636362',
+    800: '#7c7c7c',
+    700: '#c3c3c2',
+    600: '#c7c7c7',
+    500: '#ececeb',
+    400: '#fbfbfa',
+  },
+  background: {
+    default: '#f7f8fa',
+    paper: '#ffffff',
+  },
+  error: {
+    main: '#f44336',
+  },
+  success: {
+    main: '#4dcb0f',
+  },
+};
+
+const muiTheme = createTheme({
+  spacing: 4,
+  palette: pallete,
   typography: {
-    allVariants: {
-      color: '#1f78ff',
-    },
-    fontFamily: ['Poppins', 'Roboto', 'sans-serif'].join(','),
+    allVariants: { color: pallete.common.black },
+    fontFamily: ['Montserrat', 'Roboto', 'sans-serif'].join(','),
     h1: {
       fontSize: 32,
       lineHeight: '38px',
@@ -95,6 +109,112 @@ const muiTheme = createTheme({
               background-clip: content-box;
             }
         `,
+    },
+
+    MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+        size: 'small',
+      },
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          padding: '12px 24px',
+        },
+
+        contained: {
+          boxShadow: 'none',
+          background: pallete.primary.light,
+          color: pallete.primary.main,
+
+          '&:hover': {
+            backgroundColor: pallete.primary.light,
+            color: pallete.primary.main,
+            boxShadow: 'none',
+          },
+        },
+
+        text: {
+          color: pallete.common.black,
+          backgroundColor: pallete.common.white,
+
+          '&:hover': {
+            backgroundColor: pallete.primary.light,
+            color: pallete.primary.main,
+          },
+        },
+
+        sizeSmall: {
+          padding: '8px 16px',
+        },
+      },
+
+      variants: [
+        {
+          props: { variant: 'filled' },
+          style: {
+            backgroundColor: pallete.primary.main,
+            color: pallete.common.white,
+
+            '&:hover': {
+              backgroundColor: pallete.primary.main + '70',
+              color: pallete.common.black,
+            },
+
+            '&:disabled': {
+              backgroundColor: pallete.grey[600],
+              color: pallete.common.white,
+            },
+          },
+        },
+      ],
+    },
+
+    MuiButtonGroup: {
+      defaultProps: {
+        disableElevation: true,
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+          boxShadow: 'none',
+        },
+      },
+    },
+
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
+          border: `1px solid ${pallete.grey[500]}`,
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.05)',
+          minWidth: 170,
+          marginTop: 12,
+        },
+      },
+    },
+
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          padding: '6px 12px',
+          fontSize: 13,
+          lineHeight: '24px',
+        },
+      },
+    },
+
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          backgroundColor: pallete.common.white,
+          '& .MuiInputBase-root': {
+            padding: 0,
+          },
+        },
+      },
     },
   },
 });
