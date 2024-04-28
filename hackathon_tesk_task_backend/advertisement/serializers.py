@@ -1,3 +1,5 @@
+import json
+
 from django.db import transaction
 from rest_framework import serializers
 
@@ -81,3 +83,19 @@ class AdvertisementListSerializer(serializers.ModelSerializer):
         model = Advertisement
         fields = ['id', 'title', 'description', 'categories', 'location',
                   'pictures', 'status', 'time_validity', 'priority']
+
+
+class AdvertisementDetailSerializer(serializers.ModelSerializer):
+    pictures = PictureSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Advertisement
+        fields = ['id', 'title', 'description', 'categories', 'location',
+                  'pictures', 'status', 'time_validity', 'priority', 'contacts']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['contacts'] = json.loads(
+            representation['contacts'].replace("'", '"')
+        )
+        return representation

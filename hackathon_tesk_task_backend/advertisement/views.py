@@ -1,12 +1,13 @@
 from rest_framework import status, generics
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from users.permissioins import IsNeedsUser
 
 from .models import Advertisement, StatusChoices
-from .serializers import AdvertisementSerializer, GetAdvertisementSerializer, AdvertisementListSerializer
+from .serializers import (AdvertisementSerializer, GetAdvertisementSerializer,
+                          AdvertisementListSerializer, AdvertisementDetailSerializer)
 
 
 class AdvertisementAPIView(GenericAPIView):
@@ -51,3 +52,9 @@ class AdvertisementListView(generics.ListAPIView):
     queryset = Advertisement.objects.filter(status=StatusChoices.active)
     serializer_class = AdvertisementListSerializer
     filterset_fields = ['categories', 'priority']
+
+
+class AdvertisementDetailView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AdvertisementDetailSerializer
+    queryset = Advertisement.objects.filter(status=StatusChoices.active)
