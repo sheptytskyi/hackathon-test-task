@@ -24,6 +24,9 @@ export const pallete = {
   error: {
     main: '#f44336',
   },
+  success: {
+    main: '#4dcb0f',
+  },
 };
 
 const muiTheme = createTheme({

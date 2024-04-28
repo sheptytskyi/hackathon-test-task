@@ -1,10 +1,11 @@
 import { FC, ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import useLogout from '@hooks/useLogout';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import useProfile from '@hooks/useProfile.ts';
 import { UserTypes } from '@constants';
 import { Routes } from '@router/index.ts';
+import { Centered, Loader } from '@ui';
 
 type Props = {
   role: UserTypes;
@@ -12,30 +13,47 @@ type Props = {
 };
 
 const RoleGuard: FC<Props> = ({ children, role }) => {
-  const profile = useProfile();
+  const navigate = useNavigate();
+  const [{ user_type }, { isLoading, isError, refetch }] = useProfile();
   const handleLogout = useLogout();
 
-  if (!profile) {
-    return null;
+  if (isLoading) {
+    return <Loader open />;
   }
 
-  if (!profile.user_type) {
+  if (isError || !user_type) {
     return (
-      <>
-        <Typography variant="h3" align="center">
+      <Centered width={500}>
+        <Typography variant="h2" align="center">
           Your role was unable to identify.
         </Typography>
 
-        <Box width={250} mx="auto" display="flex" flexDirection="column">
-          <Button onClick={handleLogout} sx={{ mt: 2 }}>
+        <Button
+          onClick={() => navigate(-1)}
+          variant="filled"
+          sx={{ mt: 5, flex: 1 }}
+        >
+          Back
+        </Button>
+
+        <Stack width="100%" gap={4} flexDirection="row">
+          <Button onClick={refetch} variant="filled" sx={{ mt: 2, flex: 1 }}>
+            Try Again
+          </Button>
+
+          <Button
+            onClick={handleLogout}
+            variant="filled"
+            sx={{ mt: 2, flex: 1 }}
+          >
             Logout
           </Button>
-        </Box>
-      </>
+        </Stack>
+      </Centered>
     );
   }
 
-  if (role === profile.user_type) {
+  if (role === user_type) {
     return <>{children}</>;
   }
 

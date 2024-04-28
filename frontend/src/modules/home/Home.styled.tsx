@@ -14,7 +14,8 @@ export const PageWrapper = styled(Stack)({
 export const ContentWrapper = styled(Stack)(({ theme }) => ({
   padding: `${theme.spacing(4)} ${theme.spacing(8)}`,
   width: '100%',
-  maxWidth: '1200px',
+  maxWidth: '1000px',
   margin: '0 auto',
-  minHeight: '70dvh',
+  minHeight: '-webkit-fill-available',
+  // flex: 1,
 }));
