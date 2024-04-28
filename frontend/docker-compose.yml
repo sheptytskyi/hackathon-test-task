@@ -1,10 +1,19 @@
-version: '1'
+version: '3.5'
 services:
   hackaton-test-task-frontend:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
+    expose:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    ports:
+      - 1338:81
+    depends_on:
+      - hackaton-test-task-frontend

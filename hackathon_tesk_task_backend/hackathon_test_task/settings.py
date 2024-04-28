@@ -174,3 +174,5 @@ CORS_ALLOW_METHODS = (
     "POST",
     "PUT",
 )
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
