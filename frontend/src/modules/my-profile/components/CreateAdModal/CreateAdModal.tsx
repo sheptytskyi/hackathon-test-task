@@ -33,19 +33,28 @@ type Props = Pick<DialogProps, 'open'> & {
 };
 
 const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
+  {
+    children,
+    ...props
+  }: TransitionProps & {
     children: React.ReactElement;
   },
   ref: React.Ref<unknown>,
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return (
+    <Slide direction="up" ref={ref} {...props}>
+      {children}
+    </Slide>
+  );
 });
 
 const CreateAdModal: FC<Props> = (props) => {
   const { form } = useAdForm();
   const { handleCreateAd, isLoading } = useCreateAd(props.onClose);
 
-  useEffect(form.reset, [props.open]);
+  useEffect(() => {
+    form.reset();
+  }, [props.open, form]);
 
   return (
     <FormProvider {...form}>
