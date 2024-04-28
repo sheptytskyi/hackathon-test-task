@@ -3,7 +3,7 @@ import { API_KEY, API_KEY_HEADER_NAME, BASE_URL } from '@constants/config';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: BASE_URL,
+  baseUrl: BASE_URL + '/api',
   prepareHeaders: (headers) => {
     headers.set(API_KEY_HEADER_NAME, API_KEY);
     return headers;

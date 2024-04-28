@@ -6,7 +6,6 @@ interface UIState {
 }
 
 const initialState: UIState = {
-  // TODO add Toasts if we will have time for this
   loadingIds: [],
 };
 
@@ -29,6 +28,6 @@ export const uiSlice = createSlice({
     },
   },
 });
-export const selectLoadingIds = (state: RootState) => state.ui.loadingIds;
 
+export const selectLoadingIds = (state: RootState) => state.ui?.loadingIds;
 export const { setLoadings, startLoading, stopLoading } = uiSlice.actions;

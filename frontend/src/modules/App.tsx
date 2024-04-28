@@ -11,7 +11,7 @@ const App = () => {
     <>
       <RouterProvider
         router={RouterSettings}
-        fallbackElement={<>Loading...</>}
+        fallbackElement={<Loader open />}
       />
 
       <Loader open={Boolean(loadingsId.length)} />

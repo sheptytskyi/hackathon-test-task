@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 type Props = PropsWithChildren<{
   to: string;
   color?: string;
+  target?: string;
 }>;
 
 export const TextLink: FC<Props> = ({
   children,
   to,
-  color = 'common.white',
+  color = 'common.black',
+  target,
 }) => {
   return (
     <Typography
@@ -18,6 +20,7 @@ export const TextLink: FC<Props> = ({
       component={Link}
       to={to}
       sx={{ width: 'fit-content' }}
+      target={target}
     >
       {children}
     </Typography>

@@ -24,6 +24,9 @@ export const pallete = {
   error: {
     main: '#f44336',
   },
+  success: {
+    main: '#4dcb0f',
+  },
 };
 
 const muiTheme = createTheme({
@@ -109,6 +112,10 @@ const muiTheme = createTheme({
     },
 
     MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+        size: 'small',
+      },
       styleOverrides: {
         root: {
           textTransform: 'none',
@@ -117,7 +124,7 @@ const muiTheme = createTheme({
 
         contained: {
           boxShadow: 'none',
-          backgroundColor: pallete.primary.light,
+          background: pallete.primary.light,
           color: pallete.primary.main,
 
           '&:hover': {
@@ -141,6 +148,26 @@ const muiTheme = createTheme({
           padding: '8px 16px',
         },
       },
+
+      variants: [
+        {
+          props: { variant: 'filled' },
+          style: {
+            backgroundColor: pallete.primary.main,
+            color: pallete.common.white,
+
+            '&:hover': {
+              backgroundColor: pallete.primary.main + '70',
+              color: pallete.common.black,
+            },
+
+            '&:disabled': {
+              backgroundColor: pallete.grey[600],
+              color: pallete.common.white,
+            },
+          },
+        },
+      ],
     },
 
     MuiButtonGroup: {
@@ -175,6 +202,17 @@ const muiTheme = createTheme({
           padding: '6px 12px',
           fontSize: 13,
           lineHeight: '24px',
+        },
+      },
+    },
+
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          backgroundColor: pallete.common.white,
+          '& .MuiInputBase-root': {
+            padding: 0,
+          },
         },
       },
     },

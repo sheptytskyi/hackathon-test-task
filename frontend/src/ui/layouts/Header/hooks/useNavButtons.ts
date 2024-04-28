@@ -11,7 +11,7 @@ const navButtons = [
 ];
 
 const useNavButtons = () => {
-  const { user_type, isLogged } = useProfile();
+  const [{ user_type, isLogged }] = useProfile();
 
   if (!isLogged) {
     return navButtons.concat(guestNavButtons);

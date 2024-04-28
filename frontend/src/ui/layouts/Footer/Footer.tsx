@@ -1,57 +1,44 @@
 import { FC } from 'react';
 import { ContactsWrapper, Wrapper } from '@ui/layouts/Footer/Footer.styled.ts';
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { Routes } from '@router';
-import { APP_TITLE, CONTACTS } from '@constants';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import { TextLink, IconLink } from '@/ui';
+import { Box, Grid, Stack, Typography } from '@mui/material';
+import { CONTACTS, HACKATON_URL, tg } from '@constants';
+import { TextLink } from '@/ui';
 
 const Footer: FC = () => {
   return (
     <Wrapper>
       <Stack gap={4} pl={20} pb={15} flexBasis="500px">
-        <Typography variant="h1" color="common.white">
-          {APP_TITLE}
+        <Typography variant="h2" color="common.white">
+          Команда яка виконала цей проект: Діти Ньютона
         </Typography>
 
         <Typography color="common.white">
-          Тут треба написати довгий опис. Тут треба написати довгий опис. Тут
-          треба написати довгий опис. Тут треба написати довгий опис.
+          Створене по мотивам тестового завдання від Best Lviv Hackathon 2024
         </Typography>
 
-        <Box>
-          <Button to={Routes.Advertisements} component={Link}>
-            Переглянути Потреби
-          </Button>
-        </Box>
+        <Box mt={1} />
+
+        <TextLink color="common.white" to={HACKATON_URL} target="_blank">
+          {HACKATON_URL}
+        </TextLink>
       </Stack>
 
       <ContactsWrapper>
-        <Grid container spacing={2}>
-          <Grid item sm={6}>
+        <Grid container>
+          <Grid item sm={12}>
             <Typography variant="h5" color="common.white">
-              Контакти
+              Люди які прийняли участь в розробці:
             </Typography>
 
             <Stack mt={2}>
-              <TextLink to={`tel:${CONTACTS.PHONE}`}>{CONTACTS.PHONE}</TextLink>
-
-              <TextLink to={`mailto:${CONTACTS.PHONE}`}>
-                {CONTACTS.EMAIL}
-              </TextLink>
-            </Stack>
-          </Grid>
-
-          <Grid item sm={6}>
-            <Typography variant="h5" color="common.white">
-              Підпишись на нас:
-            </Typography>
-
-            <Stack mt={2} gap={2} flexDirection="row">
-              <IconLink to={CONTACTS.INSTAGRAM} icon={InstagramIcon} />
-              <IconLink to={CONTACTS.FACEBOOK} icon={FacebookIcon} />
+              {CONTACTS.map(({ name, tg: url }) => (
+                <Typography color="common.white" key={name}>
+                  {name}:{' '}
+                  <TextLink target="_blank" color="common.white" to={tg(url)}>
+                    @{url}
+                  </TextLink>
+                </Typography>
+              ))}
             </Stack>
           </Grid>
         </Grid>

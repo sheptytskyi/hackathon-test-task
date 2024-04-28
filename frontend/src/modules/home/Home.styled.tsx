@@ -6,14 +6,16 @@ export const AppWrapper = styled(Stack)(({ theme }) => ({
 }));
 
 export const PageWrapper = styled(Stack)({
-  marginTop: '80px',
-  height: 'calc(100dvh - 80px)',
+  marginTop: '70px',
+  height: 'calc(100dvh - 70px)',
   overflowY: 'auto',
 });
 
 export const ContentWrapper = styled(Stack)(({ theme }) => ({
   padding: `${theme.spacing(4)} ${theme.spacing(8)}`,
   width: '100%',
-  maxWidth: '1200px',
+  maxWidth: '1000px',
   margin: '0 auto',
+  minHeight: '-webkit-fill-available',
+  // flex: 1,
 }));

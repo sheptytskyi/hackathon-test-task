@@ -60,7 +60,9 @@ const RouterSettings = createBrowserRouter([
         path: Routes.Advertisement,
         element: (
           <AuthGuard>
-            <AdDetails />
+            <RoleGuard role={UserTypes.GiveHelp}>
+              <AdDetails />
+            </RoleGuard>
           </AuthGuard>
         ),
       },
