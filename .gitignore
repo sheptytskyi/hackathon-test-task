@@ -349,3 +349,4 @@ dmypy.json
 .pyre/
 .pytype/
 cython_debug/
+.ruff_cache
